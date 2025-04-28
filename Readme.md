@@ -1,4 +1,11 @@
+
 # 📄 Chat with PDF
+
+[![PyPI version](https://badge.fury.io/py/chat-with-pdf.svg)](https://badge.fury.io/py/chat-with-pdf)
+[![Build Status](https://github.com/anandrnair547/chat-with-pdf/actions/workflows/ci.yml/badge.svg)](https://github.com/anandrnair547/chat-with-pdf/actions)
+
+Chat with your PDF documents easily using local embeddings and powerful LLMs like OpenAI's GPT models.
+
 
 **Chat with your PDF documents** easily using local embeddings and powerful LLMs like OpenAI's GPT models.
 
@@ -27,8 +34,22 @@ from chat_with_pdf import PDFChat
 
 chat = PDFChat('path/to/your/document.pdf')
 
+
 response = chat.ask("Summarize the introduction section.")
 print(response)
+
+
+```
+
+You can pass a **file path**, **URL**, or **binary bytes** of the PDF to `PDFChat`.
+
+Example:
+
+```python
+chat = PDFChat("path/to/file.pdf")
+chat = PDFChat("https://example.com/file.pdf")
+chat = PDFChat(binary_pdf_data)
+
 ```
 
 ---
