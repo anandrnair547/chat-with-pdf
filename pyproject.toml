@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "chat-with-pdf"
+version = "0.1.0"
+description = "Chat with your PDFs using local embedding search and OpenAI."
+authors = [
+    "Anand R Nair <anand547@outlook.com>"
+]
+license = "MIT"
+readme = "README.md"
+packages = [{ include = "chat_with_pdf" }]
+
+[tool.poetry.dependencies]
+python = ">=3.10"
+pymupdf = ">=1.23.7,<2.0.0"
+sentence-transformers = ">=2.2.2,<3.0.0"
+scikit-learn = ">=1.3.0,<2.0.0"
+numpy = ">=1.26.0,<2.0.0"
+openai = ">=1.0.0,<2.0.0"
+torch = ">=2.2.0,<2.3.0"
+
+[tool.poetry.group.dev.dependencies]
+fpdf = "^1.7.2"
+pytest = "^8.3.5"
+
+[build-system]
+requires = ["poetry-core>=1.0.0,<2.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
