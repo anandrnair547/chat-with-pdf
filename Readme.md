@@ -6,23 +6,13 @@ Upload any PDF and ask natural language questions about its content — powered 
 
 ---
 
-## 🚀 Features
-
-- 📚 Extract and understand PDF content
-- 🔍 Embedding-based semantic search (local and efficient)
-- 🤖 Query PDFs using OpenAI GPT models (or pluggable LLMs)
-- 🛠️ Lightweight and fast, no heavy server needed
-- 🔒 Fully local processing (except LLM call)
-
----
-
 ## 🛠️ Installation
 
 ```bash
 pip install chat-with-pdf
 ```
 
-Or, if you are using Poetry:
+Or using Poetry:
 
 ```bash
 poetry add chat-with-pdf
@@ -35,66 +25,66 @@ poetry add chat-with-pdf
 ```python
 from chat_with_pdf import PDFChat
 
-# Initialize with your PDF file and OpenAI API key
-chat = PDFChat('path/to/your/document.pdf', openai_api_key='your-openai-api-key')
+chat = PDFChat('path/to/your/document.pdf')
 
-# Ask questions
 response = chat.ask("Summarize the introduction section.")
 print(response)
 ```
 
 ---
 
-## 📦 Requirements
+## ⚙️ Configuration Options
 
-- Python >= 3.8
-- OpenAI API Key (for generation)
-- Internet connection (for LLM calls)
+You can configure your usage via **arguments**, **environment variables**, or let it fallback to defaults.
 
-**Major dependencies:**
-- PyMuPDF
-- sentence-transformers
-- scikit-learn
-- numpy
-- openai
-- torch (for sentence-transformers)
+### Priority:
 
----
+1. Arguments passed to `PDFChat`
+2. Environment Variables
+3. Library defaults
 
-## 🧹 How It Works
+### Supported Environment Variables:
 
-1. 📄 Extracts text from the uploaded PDF using PyMuPDF.
-2. 🔗 Splits text into manageable chunks.
-3. 🧬 Creates semantic embeddings of the chunks using MiniLM or compatible models.
-4. 🔍 Retrieves the most relevant chunks based on your question.
-5. 🤖 Uses an LLM to generate a natural answer based on the relevant document pieces.
+| Variable             | Purpose                                           | Default            |
+| :------------------- | :------------------------------------------------ | :----------------- |
+| `OPENAI_API_KEY`     | Your OpenAI API key                               | "" (empty)         |
+| `OPENAI_MODEL`       | GPT model name to use                             | "gpt-3.5-turbo"    |
+| `EMBEDDING_MODEL`    | Embedding model for vector search                 | "all-MiniLM-L6-v2" |
+| `DEFAULT_CHUNK_SIZE` | Number of characters per text chunk               | 500                |
+| `TOP_K_RETRIEVAL`    | Number of similar chunks to retrieve per question | 5                  |
 
----
+### Example `.env` file:
 
-## 📈 Roadmap
+```plaintext
+OPENAI_API_KEY=sk-xxxxx
+OPENAI_MODEL=gpt-4
+DEFAULT_CHUNK_SIZE=600
+TOP_K_RETRIEVAL=8
+EMBEDDING_MODEL=all-mpnet-base-v2
+```
 
-- [x] MVP: Chat with PDF via OpenAI
-- [ ] Local LLM support (for fully offline usage)
-- [ ] Multi-file support (chat with multiple PDFs)
-- [ ] Advanced chunking (by headings, semantic structure)
-- [ ] CLI Tool for terminal use
-- [ ] Django API wrapper (for web apps)
+If you have a `.env` file at your project root, `chat-with-pdf` will automatically load it.
 
 ---
 
-## 🤝 Contributing
+## 🔥 Advanced Usage Example
 
-Pull requests are welcome!
-For major changes, please open an issue first to discuss what you would like to change.
+Explicitly passing all settings:
 
-### To run locally:
+```python
+from chat_with_pdf import PDFChat
 
-```bash
-git clone https://github.com/yourusername/chat-with-pdf.git
-cd chat-with-pdf
-poetry install
-poetry shell
-pytest
+chat = PDFChat(
+    'path/to/your/document.pdf',
+    openai_api_key="sk-your-openai-key",
+    model="gpt-4",
+    embedding_model="all-mpnet-base-v2",
+    chunk_size=600,
+    top_k_retrieval=8
+)
+
+response = chat.ask("Summarize the key points.")
+print(response)
 ```
 
 ---
