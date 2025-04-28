@@ -8,6 +8,8 @@ authors = [
 license = "MIT"
 readme = "README.md"
 packages = [{ include = "chat_with_pdf" }]
+homepage = "https://github.com/anandrnair547/chat-with-pdf"
+repository = "https://github.com/anandrnair547/chat-with-pdf"
 
 [tool.poetry.dependencies]
 python = ">=3.10"
