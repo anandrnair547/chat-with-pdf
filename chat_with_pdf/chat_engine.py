@@ -79,7 +79,5 @@ class PDFChat:
     def ask(self, query):
         relevant_chunks = self.retriever.retrieve(query, top_k=self.top_k_retrieval)
         context = "\n".join(relevant_chunks)
-        response = ask_llm(
-            query=query, context=context, api_key=self.openai_api_key, model=self.model
-        )
+        response = ask_llm(query=query, context=context, model=self.model)
         return response

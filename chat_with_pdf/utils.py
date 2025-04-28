@@ -1,28 +1,27 @@
-import openai
+import os
+from .integrations.gpts import get_provider
 
 
-def ask_llm(query, context, api_key, model="gpt-3.5-turbo"):
+def ask_llm(query: str, context: str, model: str = None) -> str:
     """
-    Sends a prompt to OpenAI's ChatCompletion API and returns the response.
+    Unified entry-point for all LLMs.
+
+    It will pick up:
+      1) provider override passed in here
+      2) environment var LLM_PROVIDER (defaults to "openai")
+
+    Similarly for model:
+      1) model override passed in here
+      2) env var <PROVIDER>_MODEL, or the provider’s own default
+
+    Then calls the provider’s .complete() under the hood.
     """
-    openai.api_key = api_key
+    # figure out which provider to use
+    provider_name = os.getenv("LLM_PROVIDER", "openai").lower()
 
-    prompt = f"Context:\n{context}\n\nQuestion:\n{query}"
+    # build an instance of that provider
+    # get_provider will itself read OPENAI_API_KEY, OPENAI_MODEL, etc.
+    llm = get_provider(provider_name, model=model)
 
-    response = openai.ChatCompletion.create(
-        model=model,
-        messages=[
-            {
-                "role": "system",
-                "content": "You are a helpful assistant that answers questions based on provided context.",
-            },
-            {"role": "user", "content": prompt},
-        ],
-        temperature=0.2,
-        max_tokens=500,
-        top_p=1.0,
-        frequency_penalty=0.0,
-        presence_penalty=0.0,
-    )
-
-    return response["choices"][0]["message"]["content"].strip()
+    # do the completion
+    return llm.complete(query, context)

@@ -69,7 +69,7 @@ You can configure your usage via **arguments**, **environment variables**, or le
 | Variable             | Purpose                                           | Default            |
 | :------------------- | :------------------------------------------------ | :----------------- |
 | `OPENAI_API_KEY`     | Your OpenAI API key                               | "" (empty)         |
-| `OPENAI_MODEL`       | GPT model name to use                             | "gpt-3.5-turbo"    |
+| `OPENAI_MODEL`       | GPT model name to use                             | "gpt-4o"           |
 | `EMBEDDING_MODEL`    | Embedding model for vector search                 | "all-MiniLM-L6-v2" |
 | `DEFAULT_CHUNK_SIZE` | Number of characters per text chunk               | 500                |
 | `TOP_K_RETRIEVAL`    | Number of similar chunks to retrieve per question | 5                  |
