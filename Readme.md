@@ -1,6 +1,6 @@
 # 📄 Chat with PDF
 
-[![PyPI version](https://badge.fury.io/py/chat-with-pdf.svg)](https://badge.fury.io/py/chat-with-pdf)
+[![PyPI version](https://img.shields.io/pypi/v/chat-with-pdf.svg)](https://pypi.org/project/chat-with-pdf/)
 [![Build Status](https://github.com/anandrnair547/chat-with-pdf/actions/workflows/ci.yml/badge.svg)](https://github.com/anandrnair547/chat-with-pdf/actions)
 
 Chat with your PDF documents easily using local embeddings and powerful LLMs through a unified SDK.
