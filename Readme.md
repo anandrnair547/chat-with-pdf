@@ -1,14 +1,9 @@
-
 # 📄 Chat with PDF
 
 [![PyPI version](https://badge.fury.io/py/chat-with-pdf.svg)](https://badge.fury.io/py/chat-with-pdf)
 [![Build Status](https://github.com/anandrnair547/chat-with-pdf/actions/workflows/ci.yml/badge.svg)](https://github.com/anandrnair547/chat-with-pdf/actions)
 
-Chat with your PDF documents easily using local embeddings and powerful LLMs like OpenAI's GPT models.
-
-
-**Chat with your PDF documents** easily using local embeddings and powerful LLMs like OpenAI's GPT models.
-
+Chat with your PDF documents easily using local embeddings and powerful LLMs through a unified SDK.
 Upload any PDF and ask natural language questions about its content — powered by semantic search and AI.
 
 ---
@@ -29,83 +24,86 @@ poetry add chat-with-pdf
 
 ## ✨ Quickstart Example
 
-```python
-from chat_with_pdf import PDFChat
+1. **Set your credentials** and optionally choose a model/provider:
 
-chat = PDFChat('path/to/your/document.pdf')
+```bash
+# Default provider key
+export OPENAI_API_KEY="sk-your-openai-key"
 
+# The model for the provider
+export OPENAI_MODEL="gpt-4"
 
-response = chat.ask("Summarize the introduction section.")
-print(response)
-
+# Switch to another provider (e.g., perplexity, openai or deepseek)
+export LLM_PROVIDER="perplexity"
 
 ```
 
-You can pass a **file path**, **URL**, or **binary bytes** of the PDF to `PDFChat`.
-
-Example:
+2. **Use the SDK** to chat with any PDF:
 
 ```python
-chat = PDFChat("path/to/file.pdf")
-chat = PDFChat("https://example.com/file.pdf")
-chat = PDFChat(binary_pdf_data)
+from chat_with_pdf import PDFChat
 
+# Local PDF file
+chat = PDFChat("path/to/your/document.pdf")
+print(chat.ask("Summarize the introduction section."))
+
+# Remote URL
+chat = PDFChat("https://example.com/sample.pdf")
+print(chat.ask("What is the main point of this document?"))
+
+# PDF in memory
+with open("path/to/your/document.pdf", "rb") as f:
+    data = f.read()
+chat = PDFChat(data)
+print(chat.ask("Give me a brief overview."))
 ```
 
 ---
 
 ## ⚙️ Configuration Options
 
-You can configure your usage via **arguments**, **environment variables**, or let it fallback to defaults.
+Configure via **environment variables** (in order of precedence):
 
-### Priority:
+| Variable             | Purpose                                              | Default            |
+| :------------------- | :--------------------------------------------------- | :----------------- |
+| `LLM_PROVIDER`       | Provider to use (`openai`, `perplexity`, `deepseek`) | `openai`           |
+| `OPENAI_API_KEY`     | Your OpenAI API key                                  | —                  |
+| `OPENAI_MODEL`       | GPT model name (used for all providers)              | `gpt-3.5-turbo`    |
+| `EMBEDDING_MODEL`    | Embedding model                                      | `all-MiniLM-L6-v2` |
+| `DEFAULT_CHUNK_SIZE` | Characters per text chunk                            | `500`              |
+| `TOP_K_RETRIEVAL`    | Number of chunks to retrieve per query               | `5`                |
 
-1. Arguments passed to `PDFChat`
-2. Environment Variables
-3. Library defaults
+> 💡 For local development, you can also create a `.env` file with these variables and the SDK will load it automatically.
 
-### Supported Environment Variables:
+--------------------- | :------------------------------------------------ | :------------------------ |
+| `LLM_PROVIDER`         | Provider to use (`openai`, `perplexity`, `deepseek`) | `openai`                  |
+| `OPENAI_API_KEY`       | Your OpenAI API key                               | —                         |
+| `OPENAI_MODEL`         | GPT model name (OpenAI)                           | `gpt-3.5-turbo`           |
+| `PERPLEXITY_API_KEY`   | Your Perplexity API key                           | —                         |
+| `PERPLEXITY_MODEL`     | Model name (Perplexity)                           | `perplexity-v1`           |
+| `DEEPSEEK_API_KEY`     | Your DeepSeek API key                             | —                         |
+| `DEEPSEEK_MODEL`       | Model name (DeepSeek)                             | `deepseek-v1`             |
+| `EMBEDDING_MODEL`      | Embedding model                                  | `all-MiniLM-L6-v2`        |
+| `DEFAULT_CHUNK_SIZE`   | Characters per text chunk                         | `500`                     |
+| `TOP_K_RETRIEVAL`      | Number of chunks to retrieve per query            | `5`                       |
 
-| Variable             | Purpose                                           | Default            |
-| :------------------- | :------------------------------------------------ | :----------------- |
-| `OPENAI_API_KEY`     | Your OpenAI API key                               | "" (empty)         |
-| `OPENAI_MODEL`       | GPT model name to use                             | "gpt-4o"           |
-| `EMBEDDING_MODEL`    | Embedding model for vector search                 | "all-MiniLM-L6-v2" |
-| `DEFAULT_CHUNK_SIZE` | Number of characters per text chunk               | 500                |
-| `TOP_K_RETRIEVAL`    | Number of similar chunks to retrieve per question | 5                  |
-
-### Example `.env` file:
-
-```plaintext
-OPENAI_API_KEY=sk-xxxxx
-OPENAI_MODEL=gpt-4
-DEFAULT_CHUNK_SIZE=600
-TOP_K_RETRIEVAL=8
-EMBEDDING_MODEL=all-mpnet-base-v2
-```
-
-If you have a `.env` file at your project root, `chat-with-pdf` will automatically load it.
+> 💡 For local development, you can also create a `.env` file with these variables and the SDK will load it automatically.
 
 ---
 
-## 🔥 Advanced Usage Example
+## 🔥 Advanced Usage
 
-Explicitly passing all settings:
+Override provider/model at runtime:
 
 ```python
 from chat_with_pdf import PDFChat
 
-chat = PDFChat(
-    'path/to/your/document.pdf',
-    openai_api_key="sk-your-openai-key",
-    model="gpt-4",
-    embedding_model="all-mpnet-base-v2",
-    chunk_size=600,
-    top_k_retrieval=8
-)
+# Use GPT-4 on OpenAI
+chat = PDFChat("doc.pdf")
+print(chat.ask("What are the key findings?", provider="openai", model="gpt-4"))
 
-response = chat.ask("Summarize the key points.")
-print(response)
+# Use DeepSeek
+print(chat.ask("Summarize", provider="deepseek"))
 ```
 
 ---
@@ -121,4 +119,3 @@ This project is licensed under the [MIT License](LICENSE).
 - [OpenAI](https://openai.com/)
 - [HuggingFace Sentence Transformers](https://www.sbert.net/)
 - [PyMuPDF](https://pymupdf.readthedocs.io/)
-
