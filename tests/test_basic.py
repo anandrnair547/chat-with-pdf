@@ -1,7 +1,13 @@
 import pytest
 from chat_with_pdf import PDFChat
-import os
-from io import BytesIO
+
+
+@pytest.fixture(autouse=True)
+def set_env(monkeypatch):
+    # Ensure the OpenAI API key and default provider/model are set
+    monkeypatch.setenv("OPENAI_API_KEY", "dummy-key")
+    monkeypatch.setenv("LLM_PROVIDER", "openai")
+    monkeypatch.setenv("OPENAI_MODEL", "gpt-3.5-turbo")
 
 
 @pytest.fixture
@@ -13,9 +19,9 @@ def dummy_pdf(tmp_path):
     pdf.add_page()
     pdf.set_font("Arial", size=12)
     pdf.cell(200, 10, txt="This is a dummy PDF for testing.", ln=True, align="C")
-    dummy_path = tmp_path / "test.pdf"
-    pdf.output(str(dummy_path))
-    return dummy_path
+    path = tmp_path / "test.pdf"
+    pdf.output(str(path))
+    return path
 
 
 @pytest.fixture
@@ -27,7 +33,7 @@ def dummy_pdf_bytes(dummy_pdf):
 
 def test_pdfchat_local_file(dummy_pdf):
     """Test initializing PDFChat with a local file path."""
-    chat = PDFChat(str(dummy_pdf), openai_api_key="dummy-key")
+    chat = PDFChat(str(dummy_pdf))
     assert chat is not None
     assert isinstance(chat.chunks, list)
     assert len(chat.chunks) > 0
@@ -35,7 +41,7 @@ def test_pdfchat_local_file(dummy_pdf):
 
 def test_pdfchat_binary_data(dummy_pdf_bytes):
     """Test initializing PDFChat with PDF binary data."""
-    chat = PDFChat(dummy_pdf_bytes, openai_api_key="dummy-key")
+    chat = PDFChat(dummy_pdf_bytes)
     assert chat is not None
     assert isinstance(chat.chunks, list)
     assert len(chat.chunks) > 0
@@ -46,28 +52,23 @@ def test_pdfchat_binary_data(dummy_pdf_bytes):
 )
 def test_pdfchat_remote_url():
     """Test initializing PDFChat with a remote URL."""
-    # You can use a small public PDF for testing.
-    # Example URL: https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf
-    pdf_url = "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
-    chat = PDFChat(pdf_url, openai_api_key="dummy-key")
+    url = "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+    chat = PDFChat(url)
     assert chat is not None
     assert isinstance(chat.chunks, list)
     assert len(chat.chunks) > 0
 
 
 def test_pdfchat_ask(monkeypatch, dummy_pdf):
-    """Test the ask method with mocked OpenAI API."""
-
-    def dummy_openai_chatcompletion_create(*args, **kwargs):
-        return {"choices": [{"message": {"content": "Dummy Answer"}}]}
-
-    import openai
+    """Test the ask method with a dummy LLM response."""
+    # Monkeypatch ask_llm in chat_engine to return a fixed answer
+    import chat_with_pdf.chat_engine as engine_module
 
     monkeypatch.setattr(
-        openai.ChatCompletion, "create", dummy_openai_chatcompletion_create
+        engine_module, "ask_llm", lambda *args, **kwargs: "Dummy Answer"
     )
 
-    chat = PDFChat(str(dummy_pdf), openai_api_key="dummy-key")
+    chat = PDFChat(str(dummy_pdf))
     response = chat.ask("What is in the document?")
     assert isinstance(response, str)
-    assert "Dummy Answer" in response
+    assert response == "Dummy Answer"

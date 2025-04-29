@@ -51,6 +51,7 @@ def main():
     print("\n--- Response ---")
     print(response)
 
-# python example/example_usage.py --type file --source examples/sample.pdf
+
+# python example/example.py --type file --source example/odos_report_2.pdf
 if __name__ == "__main__":
     main()
