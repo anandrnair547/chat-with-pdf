@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "chat-with-pdf"
-version = "0.3.3"
+version = "0.4.0"
 description = "Chat with your PDFs using local embedding search and OpenAI."
 authors = [
     "Anand R Nair <anand547@outlook.com>"
