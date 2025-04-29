@@ -75,17 +75,17 @@ Configure via **environment variables** (in order of precedence):
 
 > 💡 For local development, you can also create a `.env` file with these variables and the SDK will load it automatically.
 
---------------------- | :------------------------------------------------ | :------------------------ |
+| :--------------------- | :--------------------------------------------------- | :------------------------ |
 | `LLM_PROVIDER`         | Provider to use (`openai`, `perplexity`, `deepseek`) | `openai`                  |
-| `OPENAI_API_KEY`       | Your OpenAI API key                               | —                         |
-| `OPENAI_MODEL`         | GPT model name (OpenAI)                           | `gpt-3.5-turbo`           |
-| `PERPLEXITY_API_KEY`   | Your Perplexity API key                           | —                         |
-| `PERPLEXITY_MODEL`     | Model name (Perplexity)                           | `perplexity-v1`           |
-| `DEEPSEEK_API_KEY`     | Your DeepSeek API key                             | —                         |
-| `DEEPSEEK_MODEL`       | Model name (DeepSeek)                             | `deepseek-v1`             |
-| `EMBEDDING_MODEL`      | Embedding model                                  | `all-MiniLM-L6-v2`        |
-| `DEFAULT_CHUNK_SIZE`   | Characters per text chunk                         | `500`                     |
-| `TOP_K_RETRIEVAL`      | Number of chunks to retrieve per query            | `5`                       |
+| `OPENAI_API_KEY`       | Your OpenAI API key                                  | —                         |
+| `OPENAI_MODEL`         | GPT model name (OpenAI)                              | `gpt-3.5-turbo`           |
+| `PERPLEXITY_API_KEY`   | Your Perplexity API key                              | —                         |
+| `PERPLEXITY_MODEL`     | Model name (Perplexity)                              | `perplexity-v1`           |
+| `DEEPSEEK_API_KEY`     | Your DeepSeek API key                                | —                         |
+| `DEEPSEEK_MODEL`       | Model name (DeepSeek)                                | `deepseek-v1`             |
+| `EMBEDDING_MODEL`      | Embedding model                                      | `all-MiniLM-L6-v2`        |
+| `DEFAULT_CHUNK_SIZE`   | Characters per text chunk                            | `500`                     |
+| `TOP_K_RETRIEVAL`      | Number of chunks to retrieve per query               | `5`                       |
 
 > 💡 For local development, you can also create a `.env` file with these variables and the SDK will load it automatically.
 
