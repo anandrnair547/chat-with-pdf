@@ -36,6 +36,18 @@ test = ["anyio[trio]", "blockbuster (>=1.5.23)", "coverage[toml] (>=7)", "except
 trio = ["trio (>=0.26.1)"]
 
 [[package]]
+name = "cached-property"
+version = "2.0.1"
+description = "A decorator for caching properties in classes."
+optional = false
+python-versions = ">=3.8"
+groups = ["main"]
+files = [
+    {file = "cached_property-2.0.1-py3-none-any.whl", hash = "sha256:f617d70ab1100b7bcf6e42228f9ddcb78c676ffa167278d9f730d1c2fba69ccb"},
+    {file = "cached_property-2.0.1.tar.gz", hash = "sha256:484d617105e3ee0e4f1f58725e72a8ef9e93deee462222dbd51cd91230897641"},
+]
+
+[[package]]
 name = "certifi"
 version = "2025.4.26"
 description = "Python package for providing Mozilla's CA Bundle."
@@ -973,6 +985,36 @@ dev = ["pre-commit", "tox"]
 testing = ["pytest", "pytest-benchmark"]
 
 [[package]]
+name = "portkey-ai"
+version = "1.12.2"
+description = "Python client library for the Portkey API"
+optional = false
+python-versions = ">=3.8"
+groups = ["main"]
+files = [
+    {file = "portkey_ai-1.12.2-py3-none-any.whl", hash = "sha256:7e1adebb12f1340d8229ec8dd20950aeb39943cd1ad1576367a9eb6895e14a21"},
+    {file = "portkey_ai-1.12.2.tar.gz", hash = "sha256:cb78dcccd844c2bd7942827d4989edce03d01e8ea2f17dc66737cf7a98effcae"},
+]
+
+[package.dependencies]
+anyio = ">=3.5.0,<5"
+cached-property = "*"
+distro = ">=1.7.0,<2"
+httpx = "*"
+jiter = ">=0.4.0,<1"
+pydantic = ">=1.10.8"
+sniffio = "*"
+tqdm = ">4"
+types-requests = "*"
+typing_extensions = ">=4.7.1,<5.0"
+
+[package.extras]
+dev = ["black (==23.7.0)", "mypy (>=0.991,<2.0)", "pytest (==7.4.2)", "pytest-asyncio (==0.23.5)", "python-dotenv (==1.0.0)", "ruff (==0.0.292)"]
+instrumentation = ["opentelemetry-instrumentation (>=0.50b0,<1.0)", "opentelemetry-sdk (>=1.29.0,<2.0)", "wrapt (>=1.17.0,<2.0)"]
+langchain-callback = ["langchain-core"]
+llama-index-callback = ["llama-index"]
+
+[[package]]
 name = "pydantic"
 version = "2.11.3"
 description = "Data validation using Python type hints"
@@ -1831,6 +1873,21 @@ tests = ["autopep8", "flake8", "isort", "numpy", "pytest", "scipy (>=1.7.1)", "t
 tutorials = ["matplotlib", "pandas", "tabulate", "torch"]
 
 [[package]]
+name = "types-requests"
+version = "2.32.0.20250328"
+description = "Typing stubs for requests"
+optional = false
+python-versions = ">=3.9"
+groups = ["main"]
+files = [
+    {file = "types_requests-2.32.0.20250328-py3-none-any.whl", hash = "sha256:72ff80f84b15eb3aa7a8e2625fffb6a93f2ad5a0c20215fc1dcfa61117bcb2a2"},
+    {file = "types_requests-2.32.0.20250328.tar.gz", hash = "sha256:c9e67228ea103bd811c96984fac36ed2ae8da87a36a633964a21f199d60baf32"},
+]
+
+[package.dependencies]
+urllib3 = ">=2"
+
+[[package]]
 name = "typing-extensions"
 version = "4.13.2"
 description = "Backported and Experimental Type Hints for Python 3.8+"
@@ -1878,4 +1935,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10"
-content-hash = "7dc659410770ad74ec4446efbd06fe1cab704f8655cb6fbaf215b76802a4fe9d"
+content-hash = "47e9260a67f05db45f49e45e7e99710057d98db5c4b2a23c2a0ded9e1260bd39"

@@ -12,17 +12,18 @@ class PDFChat:
     def __init__(
         self,
         pdf_source,
-        openai_api_key=None,
         model=None,
         embedding_model=None,
         chunk_size=None,
         top_k_retrieval=None,
     ):
         # Settings priority: passed arg > env var > default
-        self.openai_api_key = (
-            openai_api_key or os.getenv("OPENAI_API_KEY") or settings.OPENAI_API_KEY
-        )
+        # self.openai_api_key = (
+        #     openai_api_key or os.getenv("OPENAI_API_KEY") or settings.OPENAI_API_KEY
+        # )
         self.model = model or os.getenv("OPENAI_MODEL") or settings.DEFAULT_MODEL
+        print("self model", self.model)
+        print("os model", os.getenv("OPENAI_MODEL"))
         self.embedding_model = (
             embedding_model
             or os.getenv("EMBEDDING_MODEL")
