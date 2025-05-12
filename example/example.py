@@ -2,13 +2,21 @@
 Example script demonstrating how to use the `chat-with-pdf` SDK.
 
 Usage:
-    python example_usage.py --type file --source examples/sample.pdf
-    python example_usage.py --type url --source https://example.com/test.pdf
-    python example_usage.py --type bytes --source examples/sample.pdf
+    python example.py --type file --source examples/sample.pdf
+    python example.py --type url --source https://example.com/test.pdf
+    python example.py --type bytes --source examples/sample.pdf
 
 Before running:
-    pip install chat-with-pdf
-    export OPENAI_API_KEY="your_openai_api_key"
+    1. Create a .env file in the project root with:
+        OPENAI_API_KEY=your_openai_api_key
+        OPENAI_MODEL=gpt-4
+        LLM_PROVIDER=openai
+        DEFAULT_CHUNK_SIZE=500
+        EMBEDDING_MODEL=all-MiniLM-L6-v2
+        TOP_K_RETRIEVAL=5
+
+    2. Install dependencies:
+        pip install chat-with-pdf
 """
 
 import argparse
@@ -32,6 +40,7 @@ def main():
     )
     args = parser.parse_args()
 
+    # Initialize PDFChat based on source type
     if args.type == "file":
         print("Using local file mode")
         chat = PDFChat(args.source)
@@ -46,12 +55,18 @@ def main():
     else:
         raise ValueError("Unknown type")
 
-    query = input("Enter your question: ")
-    response = chat.ask(query)
-    print("\n--- Response ---")
-    print(response)
+    # Interactive chat loop
+    print("\nChat with your PDF (type 'exit' to quit)")
+    print("----------------------------------------")
+    while True:
+        query = input("\nEnter your question: ")
+        if query.lower() == "exit":
+            break
+
+        response = chat.ask(query)
+        print("\nResponse:")
+        print(response)
 
 
-# python example/example.py --type file --source example/odos_report_2.pdf
 if __name__ == "__main__":
     main()

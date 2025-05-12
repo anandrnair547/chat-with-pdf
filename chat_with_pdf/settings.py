@@ -1,19 +1,28 @@
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 
-load_dotenv()
+# Get the base directory (where settings.py is located)
+BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Load API Key from environment variable or default to empty
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 
-# Default GPT model to use
-DEFAULT_MODEL = os.getenv("OPENAI_MODEL", None)
+def get_env_var(key, default=None, type_cast=str):
+    """Get environment variable with type casting and force reload."""
+    # Force reload .env file
+    load_dotenv(BASE_DIR / ".env", override=True)
+    value = os.getenv(key, default)
+    if value is not None and type_cast is not None:
+        try:
+            return type_cast(value)
+        except (ValueError, TypeError):
+            return default
+    return value
 
-# Default chunk size for PDF splitting
-DEFAULT_CHUNK_SIZE = int(os.getenv("DEFAULT_CHUNK_SIZE", "500"))
 
-# Embedding model name (for sentence-transformers)
-DEFAULT_EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "all-MiniLM-L6-v2")
-
-# Number of similar chunks to retrieve
-TOP_K_RETRIEVAL = int(os.getenv("TOP_K_RETRIEVAL", "5"))
+# Load environment variables with type casting
+OPENAI_API_KEY = get_env_var("OPENAI_API_KEY", "")
+DEFAULT_MODEL = get_env_var("OPENAI_MODEL")
+LLM_PROVIDER = get_env_var("LLM_PROVIDER")
+DEFAULT_CHUNK_SIZE = get_env_var("DEFAULT_CHUNK_SIZE", "500", int)
+DEFAULT_EMBEDDING_MODEL = get_env_var("EMBEDDING_MODEL", "all-MiniLM-L6-v2")
+TOP_K_RETRIEVAL = get_env_var("TOP_K_RETRIEVAL", "5", int)

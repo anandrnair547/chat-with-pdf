@@ -26,7 +26,6 @@ class PortkeyProvider(BaseProvider):
 
         # Determine model
         self.model = model or os.getenv("OPENAI_MODEL") or "gpt-4o"
-        print("model", self.model)
         # Determine provider identifier
         provider = provider or os.getenv("LLM_PROVIDER") or "portkey"
         config = {

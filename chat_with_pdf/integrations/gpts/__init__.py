@@ -9,7 +9,7 @@ from typing import Optional
 # Registry of available providers
 _PROVIDERS = {
     "openai": OpenAIProvider,
-    "perplexity": PerplexityProvider,
+    "perplexity-ai": PerplexityProvider,
     "deepseek": DeepSeekProvider,
     "portkey": PortkeyProvider,
 }

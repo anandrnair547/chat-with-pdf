@@ -17,28 +17,11 @@ class PDFChat:
         chunk_size=None,
         top_k_retrieval=None,
     ):
-        # Settings priority: passed arg > env var > default
-        # self.openai_api_key = (
-        #     openai_api_key or os.getenv("OPENAI_API_KEY") or settings.OPENAI_API_KEY
-        # )
-        self.model = model or os.getenv("OPENAI_MODEL") or settings.DEFAULT_MODEL
-        print("self model", self.model)
-        print("os model", os.getenv("OPENAI_MODEL"))
-        self.embedding_model = (
-            embedding_model
-            or os.getenv("EMBEDDING_MODEL")
-            or settings.DEFAULT_EMBEDDING_MODEL
-        )
-        self.chunk_size = (
-            int(chunk_size)
-            if chunk_size
-            else int(os.getenv("DEFAULT_CHUNK_SIZE", settings.DEFAULT_CHUNK_SIZE))
-        )
-        self.top_k_retrieval = (
-            int(top_k_retrieval)
-            if top_k_retrieval
-            else int(os.getenv("TOP_K_RETRIEVAL", settings.TOP_K_RETRIEVAL))
-        )
+        # Settings priority: passed arg > settings default
+        self.model = model or settings.DEFAULT_MODEL
+        self.embedding_model = embedding_model or settings.DEFAULT_EMBEDDING_MODEL
+        self.chunk_size = chunk_size or settings.DEFAULT_CHUNK_SIZE
+        self.top_k_retrieval = top_k_retrieval or settings.TOP_K_RETRIEVAL
 
         # Initialize components
         self.parser = PDFParser(chunk_size=self.chunk_size)

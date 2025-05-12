@@ -7,6 +7,7 @@ from openai import (
     RateLimitError,
     AuthenticationError,
 )
+from chat_with_pdf import settings
 
 # Default timeout in seconds
 DEFAULT_TIMEOUT = 60
@@ -16,14 +17,14 @@ class OpenAIProvider(BaseProvider):
     """Provider for OpenAI ChatCompletions."""
 
     def __init__(self, model: str = None):
-        # Fetch API key from env
-        api_key = os.getenv("OPENAI_API_KEY")
+        # Fetch API key from settings
+        api_key = settings.OPENAI_API_KEY
         if not api_key:
             raise ValueError(
-                "OpenAI API key is required. Set OPENAI_API_KEY environment variable."
+                "OpenAI API key is required. Set OPENAI_API_KEY in .env file."
             )
-        # Fetch model from env or use default
-        model = model or os.getenv("OPENAI_MODEL", "gpt-4o")
+        # Fetch model from settings or use default
+        model = model or settings.DEFAULT_MODEL or "gpt-4"
         super().__init__(model)
         # Configure client with API key and timeout
         self.client = OpenAI(api_key=api_key, timeout=DEFAULT_TIMEOUT)

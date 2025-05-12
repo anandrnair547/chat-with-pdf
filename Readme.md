@@ -34,7 +34,7 @@ export OPENAI_API_KEY="sk-your-openai-key"
 export OPENAI_MODEL="gpt-4"
 
 # Switch to another provider (e.g., perplexity, openai or deepseek)
-export LLM_PROVIDER="perplexity"
+export LLM_PROVIDER="perplexity-ai"
 
 ```
 
