@@ -76,3 +76,5 @@ models/
 # CLI outputs (optional)
 output/
 logs/
+
+*.pdf

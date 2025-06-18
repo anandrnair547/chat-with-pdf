@@ -1,1 +1,1 @@
-from .chat_engine import PDFChat
+from .chat_engine import DocumentChat
