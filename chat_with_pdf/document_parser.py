@@ -128,7 +128,7 @@ class DocumentParser:
 
                             # Process image with OCR
                             image_text = pytesseract.image_to_string(
-                                Image.open(temp_image_path)
+                                Image.open(temp_image_path), lang="eng+ara"
                             )
                             if image_text.strip():
                                 image_count += 1
